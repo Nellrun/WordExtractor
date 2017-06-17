@@ -17,13 +17,13 @@ class Parser(object):
 
 	def __sentence__(self):
 		self.lexer.getLastLine()
-		if self.lexer.sym == Lexer.SIGN or self.lexer.sym == Lexer.WORD or self.lexer.sym == self.lexer.NUM:
+		if self.lexer.sym == Lexer.SIGN or self.lexer.sym == Lexer.WORD or self.lexer.sym == self.lexer.NUM or self.lexer.COLON:
 			words = []
 			line = ""
 			while self.lexer.sym != Lexer.NEWLINE:
 				if self.lexer.value != None:
 					line = line + self.lexer.value + " "
-				if self.lexer.sym == Lexer.WORD:
+				if self.lexer.sym == Lexer.WORD and not self.lexer.value.isupper():
 					words.append(self.lexer.value)
 				self.lexer.nextTok()
 			# line = self.lexer.getLastLine()
@@ -38,7 +38,9 @@ class Parser(object):
 	def __speeches__(self):
 		while self.lexer.sym != Lexer.NEWLINE:
 			self.__sentence__()
-		self.lexer.nextTok()
+
+		while self.lexer.sym == Lexer.NEWLINE:
+			self.lexer.nextTok()
 
 		# if (self.lexer.sym != Lexer.NEWLINE):
 		# 	self.__error__("new line expected")
