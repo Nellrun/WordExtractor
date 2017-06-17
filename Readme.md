@@ -1,0 +1,1 @@
+This application, wrote in python, parsing sub files and extracting english words, that adding your dictionary
