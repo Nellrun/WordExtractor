@@ -7,6 +7,10 @@ class Parser(object):
 		self.lexer = Lexer()
 		self.words = []
 
+	def __init__(self, path):
+		self.lexer = Lexer(path)
+		self.words = []
+
 	def __error__(self, msg):
 		print("Syntax error:", msg, "at line", self.lexer.lineNum, "column", self.lexer.columnNum)
 		exit(1)
@@ -15,11 +19,14 @@ class Parser(object):
 		self.lexer.getLastLine()
 		if self.lexer.sym == Lexer.SIGN or self.lexer.sym == Lexer.WORD or self.lexer.sym == self.lexer.NUM:
 			words = []
+			line = ""
 			while self.lexer.sym != Lexer.NEWLINE:
+				if self.lexer.value != None:
+					line = line + self.lexer.value + " "
 				if self.lexer.sym == Lexer.WORD:
 					words.append(self.lexer.value)
 				self.lexer.nextTok()
-			line = self.lexer.getLastLine()
+			# line = self.lexer.getLastLine()
 
 			for word in words:
 				self.words.append(Word(None, word, None, line))

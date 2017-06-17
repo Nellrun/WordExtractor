@@ -19,12 +19,21 @@ class Lexer:
 	lineNum = 1
 	columnNum = 0
 
+	file = None
+
+	def __init__(self, path):
+		self.file = open(path, "r")
+
 	def __error__(self, msg):
 		print("Lexer error: ", msg, "at line", self.lineNum, "column", self.columnNum)
 		exit(1)
 
 	def __getc__(self):
-		self.ch = sys.stdin.read(1)
+		if (self.file == None):
+			self.ch = sys.stdin.read(1)
+		else:
+			self.ch = self.file.read(1)
+
 		self.line += self.ch
 
 		self.columnNum += 1
@@ -65,6 +74,10 @@ class Lexer:
 						self.__getc__()
 					else:
 						self.__error__("expected arrow \"-->\"")
+			elif self.ch == "<":
+				while self.ch != ">":
+					self.__getc__()
+				self.__getc__()
 			elif self.ch.isdigit():
 				value = ""
 				while self.ch.isdigit():
@@ -82,6 +95,3 @@ class Lexer:
 			else:
 				self.sym = self.SIGN
 				self.__getc__()
-				# print("char = ", self.ch)
-				# self.__error__("unexpected symbol " + self.ch)
-		# print(self.sym, self.value)

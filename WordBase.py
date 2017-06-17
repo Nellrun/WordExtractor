@@ -32,7 +32,7 @@ class WordBase(object):
 	def save(self, filename):
 		try:
 			with open(filename, "wb") as f:
-				pickle.dump(words, f)
+				pickle.dump(self.words, f)
 			return True
 		except IOError:
 			return False;
@@ -43,3 +43,14 @@ class WordBase(object):
 			if (i != n):
 				print(elem.word, elem.translate, elem.sentense, sep="\t")
 		
+	"""checking containing word in wordBase"""
+	def contain(self, word):
+		w = word.word.lower().strip()
+
+		for word in self.words:
+			if (w == word.word.lower().strip()):
+				return True
+		return False
+
+	def statistic(self):
+		print("Word base have", len(self.words), "words")
