@@ -19,10 +19,10 @@ for path in sys.argv[1:]:
 	p = Parser(path)
 	p.parse()
 
-	newWordList = []
+	newWordList = WordBase()
 
 	for word in p.words:
-		if not wb.contain(word):
+		if not wb.contain(word) and not newWordList.contain(word):
 			print()
 			print(word.word)
 			print(word.sentense.strip())
@@ -37,7 +37,7 @@ for path in sys.argv[1:]:
 
 	file = open(path + ".txt", "w")
 
-	for word in newWordList:
+	for word in newWordList.words:
 		if (word.translate != None):
 			file.write(word.word + "\t" + word.translate + "\t" + word.sentense + "\n")
 		else:

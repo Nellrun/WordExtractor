@@ -42,11 +42,6 @@ class Parser(object):
 		while self.lexer.sym == Lexer.NEWLINE:
 			self.lexer.nextTok()
 
-		# if (self.lexer.sym != Lexer.NEWLINE):
-		# 	self.__error__("new line expected")
-		# else:
-		# 	self.lexer.nextTok()
-
 	def __time__(self):
 		for i in range(3):
 			if (self.lexer.sym != Lexer.NUM):
@@ -96,6 +91,7 @@ class Parser(object):
 		self.__timeLine__()
 		self.__speeches__()
 
+	"""Main function to parse given file"""
 	def parse(self):
 		self.lexer.nextTok()
 
